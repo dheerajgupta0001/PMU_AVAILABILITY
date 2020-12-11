@@ -1,0 +1,79 @@
+{% extends "layoutBase.html.j2" %}
+{% block title %}PMU PLOT{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<style type='text/css'>
+    h1 {
+    color : black;
+    }
+</style>
+<h1>Display PMU Data Graph</h1>
+
+<div class="row align-content-center">
+    
+    <form class="form-inline" method="POST">
+        <p>Start Date <input name="startDate" class="form-inline bg-light border-1 mr-2" type="date" /></p>
+        <p>End Date <input name="endDate" class="form-inline bg-light border-1 mr-3" type="date" /></p>
+        <div class="menu">
+        <label for="pmu">Choose PMU LOCATION(s):</label>
+            <select multiple class="chosen-select" name="pmu" id="pmu" size="6">
+                <option value="">Select PMUs</option>
+                <option value="MPUSA_PGPM01">MPUSA_PGPM01</option>
+                <option value="JBLPR_PGPM01">JBLPR_PGPM01</option>
+                <option value="JBLPR_PGPM02">JBLPR_PGPM02</option>
+                <option value="JBLPR_PGPM02">JBLPR_PGPM03</option>
+                <option value="JBLPR_PGPM02">JBLPR_PGPM04</option>
+                <option value="JBLPR_PGPM02">JBLPR_PGPM03</option>
+                <option value="JBLPR_PGPM02">JBLPR_PGPM04</option>
+                <option value="JBLPR_PGPM02">JBLPR_PGPM05</option>
+                <option value="JBLPR_PGPM02">KALA4_PGPM01</option>
+                <option value="JBLPR_PGPM02">KALA4_PGPM02</option>
+                <option value="JBLPR_PGPM02">KAWAS_GSPM01</option>
+                <option value="JBLPR_PGPM02">KAWAS_GSPM02</option>
+                <option value="JBLPR_PGPM02">KHNDW_PGPM01</option>
+                <option value="JBLPR_PGPM02">KHNDW_PGPM02</option>
+                <option value="JBLPR_PGPM02">KHNDW_PGPM03</option>
+                <option value="JBLPR_PGPM02">KHNDW_PGPM04</option>
+                <option value="JBLPR_PGPM02">KHNDW_PGPM05</option>
+                <option value="JBLPR_PGPM02">KHNDW_PGPM06</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM01</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM02</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM03</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM04</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM05</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM06</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM07</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM08</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM09</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM10</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM11</option>
+                <option value="JBLPR_PGPM02">DRMGH_PGPM12</option>
+            </select>
+            <p align= "right">
+            <label for="col">Select Attribute</label>
+            <select class="chosen-select" name="col" id="col">
+                <option value="">Select PMUs</option>
+                <option value="AVAILABILITY_PERC">Availability %</option>
+                <option value="DATA_VALID_PERC">Data Valid (%)</option>
+                <option value="DATA_ERROR_PERC">Data Error (%)</option>
+                <option value="GPS_LOCKED_PERC">GPS Locked (%)</option>
+            <input type="submit" value="submit"></p>
+        </div>
+    </form>
+</div>
+
+<div id='pmuDiv'></div>
+        <div id='pmuPlotDiv'></div>
+</div>
+<style>
+    #pmuDiv
+    {
+        width: 100%;
+    }
+</style>
+
+{% endblock %}

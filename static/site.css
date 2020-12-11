@@ -1,0 +1,10 @@
+#respDiv {
+    border: 0.4rem solid transparent;
+    /* width: 8em;
+    height: 10em; */
+    max-height: 30em;
+    max-width: 50%;
+    overflow: auto;
+    font-size: 1.5rem;
+    padding: 1rem;
+}

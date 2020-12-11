@@ -1,0 +1,33 @@
+{% extends "layoutBase.html.j2" %}
+{% block title %}Create PMU Availability Data{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<style type='text/css'>
+    h1 {
+    color : black;
+    }
+</style>
+<h1>Create data in PMU Availability Data store</h1>
+<div class="row align-content-center">
+    <form class="form-inline" method="POST">
+        <div>
+            <label for="startDate">Start Date</label>
+            <input name="startDate" class="form-inline bg-light border-1 mr-2" type="date" {% if startDate %} value="{{startDate}}" {% endif %}/>
+            <label for="endDate">End Date</label>
+            <input name="endDate" class="form-inline bg-light border-1 mr-3" type="date" {% if endDate %} value="{{endDate}}" {% endif %}/>
+        </div>
+        <div class="form-group">
+                <input type="submit" value="Create Data" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+{% if data and ('message' in data) %}
+<div>{{data['message']}}</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<ul class="navbar-nav ml-auto">
+    {% if user %}
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-lg-inline text-gray-600">{{user.name}}</span>
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in">
+                <a class="dropdown-item" href='#'>
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                </a>
+                <div class="dropdown-divider"></div>
+                <form class="form-inline">
+                    <button type="submit" class="btn btn-link dropdown-item"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</button>
+                </form>
+            </div>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href='#'>
+                <span class="mr-2 d-lg-inline text-gray-600">WESTREN REGIONAL LOAD DISPATCH CENTRE</span>
+            </a>
+        </li>
+    {% endif %}
+</ul>

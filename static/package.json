@@ -1,0 +1,28 @@
+{
+  "name": "wrldc_mis_flask_ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nagasudhirpulla/wrldc_mis_flask_ui.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nagasudhirpulla/wrldc_mis_flask_ui/issues"
+  },
+  "homepage": "https://github.com/nagasudhirpulla/wrldc_mis_flask_ui#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "bootstrap": "^4.5.2",
+    "datatables.net-bs4": "^1.10.22",
+    "datatables.net-buttons-dt": "^1.6.4",
+    "datatables.net-dt": "^1.10.22",
+    "jquery": "^3.5.1",
+    "startbootstrap-sb-admin-2": "^4.1.1"
+  }
+}

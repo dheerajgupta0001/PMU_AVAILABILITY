@@ -1,0 +1,91 @@
+{% extends "layoutBase.html.j2" %}
+{% block title %}{{data['title']}}{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>{{data['heading']}}</h1>
+<table class='table table-bordered table-hover display w-auto' id='filesTable'>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Modified Time</th>
+            <th>Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fileObj in data['files'] %}
+        <tr>
+            <td>
+                <a href="{{ (request.path + '/' if request.path != '/' else '') + fileObj['name'] }}">
+                    {{ fileObj['name'] }}
+                </a>
+            </td>
+            <td>
+                {{fileObj['mTime']}}
+            </td>
+            <td>
+                {{fileObj['size']}}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Modified Time</th>
+            <th>Size</th>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/datatables.net-dt/css/jquery.dataTables.min.css') }}" />
+<script type="text/javascript" src="{{ url_for('static', filename='node_modules/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='node_modules/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='node_modules/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='node_modules/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='node_modules/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        // https://datatables.net/examples/api/multi_filter.html
+        // Setup - add a text input to each footer cell
+        $('#filesTable tfoot th').each(function () {
+            //var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search" />');
+        });
+        var filesTable = $('#filesTable').DataTable({
+            fixedHeader: true,
+            "lengthMenu": [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]],
+            "pageLength": 50,
+            dom: 'Bfrtip',
+            "order": [[0, "asc"]],
+            buttons: ['pageLength', 'copy']
+        });
+        var r = $('#filesTable tfoot tr');
+        r.find('th').each(function () {
+            $(this).css('padding', '3px');
+        });
+        $('#filesTable thead').append(r);
+        // Apply the filter
+        // https://www.jqueryscript.net/demo/DataTables-Jquery-Table-Plugin/examples/api/multi_filter.html
+        $("#filesTable thead input").on('keyup change', function () {
+            filesTable
+                .column($(this).parent().index() + ':visible')
+                .search(this.value)
+                .draw();
+        });
+    });
+</script>
+<style>
+    thead input {
+        padding: 2px;
+        box-sizing: border-box;
+        font-size: small;
+        width: 100%
+    }
+</style>
+{% endblock %}

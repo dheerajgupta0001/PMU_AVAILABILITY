@@ -75,7 +75,9 @@ def plotGraphPmuData():
 
         # insert pmu availability data into db via the repository instance
         dfData_g = plotPmuDataRepo.plotPmuAvailabilityData(startDate, endDate, multiSelectList, colAttribute)
-        return render_template('testGraph.html.j2', data= dfData_g)
+        startDate=dt.datetime.strftime(startDate, '%Y-%m-%d')
+        endDate=dt.datetime.strftime(endDate, '%Y-%m-%d')
+        return render_template('testGraph.html.j2', data= dfData_g, startDate= startDate, endDate= endDate)
     # in case of get request just return the html template
     return render_template('testGraph.html.j2')
 
@@ -88,16 +90,17 @@ def displayPmuAvailabilityData():
         startDate = dt.datetime.strptime(startDate, '%Y-%m-%d')
         endDate = dt.datetime.strptime(endDate, '%Y-%m-%d')
 
-        ''''#get the instance of pmu availability repository for data fetching
+        #get the instance of pmu availability repository for data fetching
         fetchPmuDataRepo = FetchPmuAvailabilityData(appDbConnStr)
 
         # insert pmu availability data into db via the repository instance
-        isDataFetchSuccess = fetchPmuDataRepo.fetchPmuAvailabilityData(dumpFolder, startDate, endDate)
+        avgData = fetchPmuDataRepo.fetchPmuAvailabilityData(startDate, endDate)
 
-
-        resp = fetchPmuDataRepo.fetchPmuAvailabilityData(dumpFolder,startDate, endDate)'''
-        #msg= resp['data']
-        #return render_template('displayPmuAvailabilityData.html.j2', data= msg)
+        # create pmu availability list for report
+        data = fetchPmuDataRepo.createPmuAvailabilityList(startDate, endDate, avgData)
+        # print("list format")
+        # print(data)
+        return render_template('displayPmuAvailabilityData.html.j2', data= data)
     # in case of get request just return the html template
     return render_template('displayPmuAvailabilityData.html.j2')
 

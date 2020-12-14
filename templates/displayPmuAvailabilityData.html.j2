@@ -1,5 +1,5 @@
 {% extends "layoutBase.html.j2" %}
-{% block title %}PMU Availability Data{% endblock %}
+{% block title %}Create PMU Average Report{% endblock %}
 
 {% block head %}
 {{ super() }}
@@ -18,39 +18,39 @@
         <input name="startDate" class="form-inline bg-light border-1 mr-2" type="date" />
         <label for="endDate">End Date</label>
         <input name="endDate" class="form-inline bg-light border-1 mr-3" type="date" />
-        <button id="fetchIegcViolMsgsBtn" class="btn btn-success btn-icon-split">
+        <button id="fetchPmuAvailabilityBtn" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-sync"></i>
             </span>
-            <span class="text">Show Data</span>
+            <span class="text">Generate Report</span>
         </button>
     </form>
 </div>
 
-{% if data%}
+{% if data %}
     <div>
         <table id="example" class="table table-bordered table-hover display w-auto"  style="color: black">
             <thead>
                 <tr>
-                <th class="th-sm">PMU_LOCATION</th>
+                <th class="th-sm">PMU LOCATION</th>
                 <th class="th-sm">AVG(AVAILABILITY %)</th>
-                <th class="th-sm">COUNT(AVAILABILITY %)</th>
+                <th class="th-sm">Days(Data Present)</th>
                 </tr>
             </thead>
             <tbody>
                 {% for row in data %}
                 <tr>
-                    <th>{{row['msgId']}}</th>
-                    <th>{{row['date']}}</th>
-                    <th>{{row['entity']}}</th>
+                    <th>{{row['pmu_location']}}</th>
+                    <th>{{row['avg_availability_perc']}}</th>
+                    <th>{{row['days_count']}}</th>
                 </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
-                <th class="th-sm">PMU_LOCATION</th>
+                <th class="th-sm">PMU LOCATION</th>
                 <th class="th-sm">AVG(AVAILABILITY %)</th>
-                <th class="th-sm">COUNT(AVAILABILITY %)</th>
+                <th class="th-sm">Days(Data Present)</th>
                 </tr>
             </tfoot>
         </table>

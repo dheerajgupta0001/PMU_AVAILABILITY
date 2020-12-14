@@ -3,7 +3,7 @@ import cx_Oracle
 import datetime as dt
 import os
 import pandas as pd
-
+from src.typeDefs.pmuAvailabilityReportSummary import IPmuAvailabilityReportSummary
 
 class FetchPmuAvailabilityData():
     """Repository class for pmu availability summary data
@@ -17,7 +17,7 @@ class FetchPmuAvailabilityData():
         """
         self.localConStr = dbConStr
 
-    def fetchPmuAvailabilityData(self,   dumpFolder: str, startDate: dt.datetime, endDate: dt.datetime ) -> bool:
+    def fetchPmuAvailabilityData(self, startDate: dt.datetime, endDate: dt.datetime ) -> pd.core.frame.DataFrame:
         """fetchess pmu availability data from the app db
         Args:
             appDbConStr (str): application db connection string
@@ -30,7 +30,6 @@ class FetchPmuAvailabilityData():
         try:
             connection = cx_Oracle.connect(self.localConStr)
             cursor = connection.cursor()
-            isInsertSuccess = True
             sql_fetch = """ 
                         select pmu_location, AVG(availability_perc), COUNT(availability_perc)
                         from mis_warehouse.pmu_availability
@@ -42,7 +41,6 @@ class FetchPmuAvailabilityData():
             data = pd.read_sql(sql_fetch, params={
                 'start_date': startDate, 'end_date': endDate}, con=connection)
         except Exception as e:
-            isInsertSuccess = False
             print('Error while fetching pmu availability data from db')
             print(e)
         finally:
@@ -50,8 +48,12 @@ class FetchPmuAvailabilityData():
             if cursor is not None:
                 cursor.close()
             connection.close()
-            print('closed db connection after pair angle violation data fetching')
-        
+            print('closed db connection after pmu availability data fetching')
+        return data
+    def createAverageReport(self, dumpFolder: str, startDate: dt.datetime, endDate: dt.datetime, data) -> bool:
+        isInsertSuccess = False
+        if len(data)>0:
+            isInsertSuccess = True
         data['AVG(AVAILABILITY_PERC)'] = data['AVG(AVAILABILITY_PERC)'].round(decimals= 4)
         # generate file name
         dumpFileName = 'PMU_availability_Report_average_{0}_to_{1}.csv'.format(dt.datetime.strftime(
@@ -60,3 +62,15 @@ class FetchPmuAvailabilityData():
         data.to_csv(dumpFileFullPath, index=False)
 
         return isInsertSuccess
+
+    def createPmuAvailabilityList(self, startDate: dt.datetime, endDate: dt.datetime, df) -> List[IPmuAvailabilityReportSummary]:
+        pmuAvailabilityList: List[IPmuAvailabilityReportSummary] = []
+        df['AVG(AVAILABILITY_PERC)'] = df['AVG(AVAILABILITY_PERC)'].round(decimals= 4)
+        for i in df.index:
+            pmuAvail: IPmuAvailabilityReportSummary = {
+                'pmu_location': df['PMU_LOCATION'][i],
+                'avg_availability_perc': df['AVG(AVAILABILITY_PERC)'][i],
+                'days_count': df['COUNT(AVAILABILITY_PERC)'][i],
+            }
+            pmuAvailabilityList.append(pmuAvail)
+        return pmuAvailabilityList

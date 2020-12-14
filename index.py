@@ -56,7 +56,10 @@ elif test == '2':
     fetchPmuDataRepo = FetchPmuAvailabilityData(appDbConnStr)
 
     # insert pmu availability data into db via the repository instance
-    isDataFetchSuccess = fetchPmuDataRepo.fetchPmuAvailabilityData(dumpFolder, startDate, endDate)
+    avgData = fetchPmuDataRepo.fetchPmuAvailabilityData(startDate, endDate)
+
+    # create average report
+    isDataFetchSuccess = fetchPmuDataRepo.createAverageReport(dumpFolder, startDate, endDate, avgData)
 
     if isDataFetchSuccess:
         print("Pmu Availability Data fetching between date {0} and {1} is SUCCESSFUL".format(startDate, endDate))

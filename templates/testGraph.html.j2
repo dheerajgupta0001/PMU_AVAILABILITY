@@ -141,6 +141,7 @@
 
 {% block scripts %}
 {% if data %}
+    <p><strong> Start Date: {{startDate}}          End Date: {{endDate}}</p>
     {% set dfData = data %}
     <script>
         var dfData_g = {{ dfData|safe }};

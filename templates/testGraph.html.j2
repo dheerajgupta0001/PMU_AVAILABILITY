@@ -12,14 +12,21 @@
     }
     h3 {
     color : black;
+    border: 0.4rem solid transparent;
+    /* width: 8em;
+    height: 10em; */
+    max-height: 30em;
+    overflow: auto;
+    font-size: 1.5rem;
+    padding: 1rem;
     }
 </style>
 <h1>Display PMU Data Graph</h1>
 
 <div class="row align-content-center">
     <form class="form-inline" method="POST">
-        <p>Start Date <input name="startDate" class="form-inline bg-light border-1 mr-2" type="date" /></p>
-        <p>End Date <input name="endDate" class="form-inline bg-light border-1 mr-3" type="date" /></p>
+        <p>Start Date <input name="startDate" class="form-inline bg-light border-1 mr-2" type="date"  {% if startDate %} value="{{startDate}}" {% endif %}/></p>
+        <p>End Date <input name="endDate" class="form-inline bg-light border-1 mr-3" type="date"  {% if endDate %} value="{{endDate}}" {% endif %}/></p>
         <div class="menu">
         <label for="pmu">Choose PMU LOCATION(s):</label>
             <select multiple class="chosen-select" name="pmu" id="pmu" size="6">
@@ -140,7 +147,7 @@
     </form>
 </div>
 {% if data %}
-    <h3><p> Start Date: {{startDate}} End Date: {{endDate}}</p></h3>
+    <h3><p>Attribute: {{col}}</p></h3>
 {% endif %}
 
 

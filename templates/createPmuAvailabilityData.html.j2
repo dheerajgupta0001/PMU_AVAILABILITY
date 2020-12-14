@@ -12,6 +12,13 @@
     }
     h3 {
     color : black;
+    border: 0.4rem solid transparent;
+    /* width: 8em;
+    height: 10em; */
+    max-height: 30em;
+    overflow: auto;
+    font-size: 1.5rem;
+    padding: 1rem;
     }
 </style>
 <h1>Create data in PMU Availability Data store</h1>
@@ -30,7 +37,7 @@
 </div>
 
 {% if data %}
-    <h3><p>Pmu Availability Data insertion successful for Date between {{startDate}} and {{endDate}}</p></h3>
+    <h3><p>Pmu Availability Data insertion successful!!!</p></h3>
 {% endif %}
 
 {% endblock %}

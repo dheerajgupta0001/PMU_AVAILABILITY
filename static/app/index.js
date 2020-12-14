@@ -12,7 +12,7 @@ function loadPlotData() {
         var trace = {
             x: times,
             y: dfData_g[meas],
-            mode: 'marker',
+            mode: 'lines+markers',
             name: meas
         };
         traces.push(trace);

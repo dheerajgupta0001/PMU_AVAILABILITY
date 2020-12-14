@@ -79,7 +79,16 @@ def plotGraphPmuData():
         dfData_g = plotPmuDataRepo.plotPmuAvailabilityData(startDate, endDate, multiSelectList, colAttribute)
         startDate=dt.datetime.strftime(startDate, '%Y-%m-%d')
         endDate=dt.datetime.strftime(endDate, '%Y-%m-%d')
-        return render_template('testGraph.html.j2', data= dfData_g, startDate= startDate, endDate= endDate)
+        column = colAttribute
+        if colAttribute == "DATA_VALID_PERC":
+            column= "Data Valid(%)"
+        elif colAttribute == "AVAILABILITY_PERC":
+            column= "Availability (%)"
+        elif colAttribute == "DATA_ERROR_PERC":
+            column= "Data Error(%)"
+        elif colAttribute == "GPS_LOCKED_PERC":
+            column= "Gps Locked(%)"
+        return render_template('testGraph.html.j2', data= dfData_g, startDate= startDate, endDate= endDate, col=column)
     # in case of get request just return the html template
     return render_template('testGraph.html.j2')
 

@@ -30,19 +30,29 @@ class PlotPmuAvailabilityData():
         try:
             connection = cx_Oracle.connect(self.localConStr)
             cursor = connection.cursor()
-            sql_fetch = f""" 
-                        select data_date, pmu_location, {colData}
-                        from mis_warehouse.pmu_availability
-                        where
-                        data_date between to_date(:start_date) and to_date(:end_date)
-                        and pmu_location in {tuple(pmuList)}
-                        """
+            x = len(pmuList)
+            if x>1:
+                sql_fetch = f""" 
+                            select data_date, pmu_location, {colData}
+                            from mis_warehouse.pmu_availability
+                            where
+                            data_date between to_date(:start_date) and to_date(:end_date)
+                            and pmu_location in {tuple(pmuList)}
+                            """
+            else:
+                sql_fetch = f""" 
+                            select data_date, pmu_location, {colData}
+                            from mis_warehouse.pmu_availability
+                            where
+                            data_date between to_date(:start_date) and to_date(:end_date)
+                            and pmu_location in ('{pmuList[0]}')
+                            """
             cursor.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD' ")
             data = pd.read_sql(sql_fetch, params={
                 'start_date': startDate, 'end_date': endDate}, con=connection)
             data= data.pivot_table(index=["DATA_DATE"],
                                     columns='PMU_LOCATION', values=colData).reset_index()
-            print(type(data['DATA_DATE']))
+            # print(type(data['DATA_DATE']))
             dateList = []
             for col in data['DATA_DATE']:
                 dateList.append(dt.datetime.strftime(col, '%Y-%m-%d'))

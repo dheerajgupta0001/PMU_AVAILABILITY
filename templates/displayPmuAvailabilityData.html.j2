@@ -10,8 +10,11 @@
     h1 {
     color : black;
     }
+    h3 {
+    color : black;
+    }
 </style>
-<h1>Display PMU Availability Data</h1>
+<h1><strong>Display PMU Availability Data</h1>
 <div class="row align-content-center">
     <form class="form-inline" method="POST">
         <label for="startDate">Start Date</label>
@@ -28,6 +31,7 @@
 </div>
 
 {% if data %}
+    <h3><p> Start Date: {{startDate}} End Date: {{endDate}}</p></h3>
     <div>
         <table id="example" class="table table-bordered table-hover display w-auto"  style="color: black">
             <thead>

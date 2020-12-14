@@ -45,13 +45,15 @@ def createPmuAvailabilityData():
             print(startDate)
             isRawCreationSuccess = createPmuAvailabilityRawData(
                     appDbConnStr, pmuFolderPath, startDate, endDate)
+            startDate=dt.datetime.strftime(startDate, '%Y-%m-%d')
+            endDate=dt.datetime.strftime(endDate, '%Y-%m-%d')
             if isRawCreationSuccess:
                 x=  {'message': 'Pmu Availability Data insertion successful!!!'}
-                return render_template('createPmuAvailabilityData.html.j2', data= x)
+                return render_template('createPmuAvailabilityData.html.j2', data= x, startDate= startDate, endDate= endDate)
         except Exception as ex:
             print(ex)
             x = jsonify({'message': 'some error occured...'}), 400
-            return render_template('createPmuAvailabilityData.html.j2', data={'message': json.dumps(x)})
+            return render_template('createPmuAvailabilityData.html.j2', data=x)
 
         return jsonify({'message': 'some error occured...'}), 400
 
@@ -98,9 +100,9 @@ def displayPmuAvailabilityData():
 
         # create pmu availability list for report
         data = fetchPmuDataRepo.createPmuAvailabilityList(startDate, endDate, avgData)
-        # print("list format")
-        # print(data)
-        return render_template('displayPmuAvailabilityData.html.j2', data= data)
+        startDate=dt.datetime.strftime(startDate, '%Y-%m-%d')
+        endDate=dt.datetime.strftime(endDate, '%Y-%m-%d')
+        return render_template('displayPmuAvailabilityData.html.j2', data= data, startDate= startDate, endDate= endDate)
     # in case of get request just return the html template
     return render_template('displayPmuAvailabilityData.html.j2')
 

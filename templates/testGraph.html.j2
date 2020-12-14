@@ -10,6 +10,9 @@
     h1 {
     color : black;
     }
+    h3 {
+    color : black;
+    }
 </style>
 <h1>Display PMU Data Graph</h1>
 
@@ -136,12 +139,16 @@
         </div>
     </form>
 </div>
+{% if data %}
+    <h3><p> Start Date: {{startDate}} End Date: {{endDate}}</p></h3>
+{% endif %}
+
+
 <div id='pmuDiv'></div>
 <script src="static/app/plotly-latest.min.js"></script>
 
 {% block scripts %}
 {% if data %}
-    <p><strong> Start Date: {{startDate}} End Date: {{endDate}}</p>
     {% set dfData = data %}
     <script>
         var dfData_g = {{ dfData|safe }};

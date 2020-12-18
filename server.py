@@ -70,13 +70,13 @@ def plotGraphPmuData():
         endDate = dt.datetime.strptime(endDate, '%Y-%m-%d')
         multiSelectList = request.form.getlist('pmu')
         colAttribute = request.form.get('col')
-        print(multiSelectList)
+        #print(multiSelectList)
 
         #get the instance of pmu availability repository for GRAPH PLOTTING
         plotPmuDataRepo = PlotPmuAvailabilityData(appDbConnStr)
 
         # insert pmu availability data into db via the repository instance
-        dfData_g = plotPmuDataRepo.plotPmuAvailabilityData(startDate, endDate, multiSelectList, colAttribute)
+        dfData_g, origData = plotPmuDataRepo.plotPmuAvailabilityData(startDate, endDate, multiSelectList, colAttribute)
         startDate=dt.datetime.strftime(startDate, '%Y-%m-%d')
         endDate=dt.datetime.strftime(endDate, '%Y-%m-%d')
         column = colAttribute
@@ -88,7 +88,11 @@ def plotGraphPmuData():
             column= "Data Error(%)"
         elif colAttribute == "GPS_LOCKED_PERC":
             column= "Gps Locked(%)"
-        return render_template('testGraph.html.j2', data= dfData_g, startDate= startDate, endDate= endDate, col=column)
+        # converting to list of records
+        origData[colAttribute]=origData[colAttribute].round(decimals=4)
+        resRecords = origData.to_dict(orient='records')
+        #print(resRecords)
+        return render_template('testGraph.html.j2', data= dfData_g, printData=resRecords, startDate= startDate, endDate= endDate, col=column, printCol=colAttribute)
     # in case of get request just return the html template
     return render_template('testGraph.html.j2')
 
@@ -114,7 +118,6 @@ def displayPmuAvailabilityData():
         return render_template('displayPmuAvailabilityData.html.j2', data= data, startDate= startDate, endDate= endDate)
     # in case of get request just return the html template
     return render_template('displayPmuAvailabilityData.html.j2')
-
 
 if __name__ == '__main__':
     app.run(port=int(appConfig['flaskPort']), debug=True)

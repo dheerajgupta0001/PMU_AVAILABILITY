@@ -50,6 +50,7 @@ class PlotPmuAvailabilityData():
             cursor.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD' ")
             data = pd.read_sql(sql_fetch, params={
                 'start_date': startDate, 'end_date': endDate}, con=connection)
+            origData = data
             data= data.pivot_table(index=["DATA_DATE"],
                                     columns='PMU_LOCATION', values=colData).reset_index()
             # print(type(data['DATA_DATE']))
@@ -71,4 +72,4 @@ class PlotPmuAvailabilityData():
         resRecords = data.to_dict(orient='list')
         #print(resRecords)
 
-        return resRecords
+        return resRecords, origData

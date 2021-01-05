@@ -121,8 +121,8 @@ def displayPmuAvailabilityData():
 
 if __name__ == '__main__':
     app.run(port=int(appConfig['flaskPort']), debug=True)
-    ''''serverMode: str = appConfig['mode']
+    serverMode: str = appConfig['mode']
     if serverMode.lower() == 'd':
         app.run(host="0.0.0.0", port=int(appConfig['flaskPort']), debug=True)
     else:
-        serve(app, host='0.0.0.0', port=int(appConfig['flaskPort']), threads=1)'''
+        serve(app, host='0.0.0.0', port=int(appConfig['flaskPort']), threads=1)

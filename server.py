@@ -70,7 +70,7 @@ def plotGraphPmuData():
         endDate = dt.datetime.strptime(endDate, '%Y-%m-%d')
         multiSelectList = request.form.getlist('pmu')
         colAttribute = request.form.get('col')
-        print(multiSelectList)
+        #print(multiSelectList)
 
         #get the instance of pmu availability repository for GRAPH PLOTTING
         plotPmuDataRepo = PlotPmuAvailabilityData(appDbConnStr)
@@ -92,9 +92,9 @@ def plotGraphPmuData():
         origData[colAttribute]=origData[colAttribute].round(decimals=4)
         resRecords = origData.to_dict(orient='records')
         #print(resRecords)
-        return render_template('test.html.j2', data= dfData_g, printData=resRecords, startDate= startDate, endDate= endDate, col=column, printCol=colAttribute)
+        return render_template('plotGraph.html.j2', data= dfData_g, printData=resRecords, startDate= startDate, endDate= endDate, col=column, printCol=colAttribute)
     # in case of get request just return the html template
-    return render_template('test.html.j2')
+    return render_template('plotGraph.html.j2')
 
 @app.route('/displayPmuAvailabilityData', methods=['GET', 'POST'])
 def displayPmuAvailabilityData():

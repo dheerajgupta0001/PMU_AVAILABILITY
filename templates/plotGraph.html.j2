@@ -623,14 +623,14 @@
         </select>
         </div>
         <div class="form-group col-md-3">
-            <input type="radio" id="AVAILABILITY_PERC" name="col" value="male">
-            <label for="AVAILABILITY_PERC">Availability %</label>
-            <input type="radio" id="DATA_VALID_PERC" name="col" value="female">
-            <label for="DATA_VALID_PERC">Data Valid (%)</label><br>
-            <input type="radio" id="AVAILABILITY_PERC" name="col" value="male">
-            <label for="AVAILABILITY_PERC">Availability %</label><br>
-            <input type="radio" id="DATA_VALID_PERC" name="col" value="female">
-            <label for="DATA_VALID_PERC">Data Valid (%)</label><br>
+            <label for="col">Select Attribute</label>
+            <select class="chosen-select" name="col" id="col">
+                <option value="">Select PMUs</option>
+                <option value="AVAILABILITY_PERC">Availability %</option>
+                <option value="DATA_VALID_PERC">Data Valid (%)</option>
+                <option value="DATA_ERROR_PERC">Data Error (%)</option>
+                <option value="GPS_LOCKED_PERC">GPS Locked (%)</option>
+            </select>
         </div>
     </div>
     <input type="submit" class = "btn btn-success" value="submit">

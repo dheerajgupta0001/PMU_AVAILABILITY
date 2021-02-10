@@ -48,7 +48,7 @@ class FetchPmuAvailabilityData():
             if cursor is not None:
                 cursor.close()
             connection.close()
-            print('closed db connection after pmu availability data fetching')
+            # print('closed db connection after pmu availability data fetching')
         return data
     def createAverageReport(self, dumpFolder: str, startDate: dt.datetime, endDate: dt.datetime, data) -> bool:
         isInsertSuccess = False

@@ -76,7 +76,8 @@ def plotGraphPmuData():
         plotPmuDataRepo = PlotPmuAvailabilityData(appDbConnStr)
 
         # insert pmu availability data into db via the repository instance
-        dfData_g, origData = plotPmuDataRepo.plotPmuAvailabilityData(startDate, endDate, multiSelectList, colAttribute)
+        dfData_g, origData = plotPmuDataRepo.plotPmuAvailabilityData(startDate, endDate,
+                                                                    multiSelectList, colAttribute)
         startDate=dt.datetime.strftime(startDate, '%Y-%m-%d')
         endDate=dt.datetime.strftime(endDate, '%Y-%m-%d')
         column = colAttribute
@@ -91,8 +92,10 @@ def plotGraphPmuData():
         # converting to list of records
         origData[colAttribute]=origData[colAttribute].round(decimals=4)
         resRecords = origData.to_dict(orient='records')
-        #print(resRecords)
-        return render_template('testGraph.html.j2', data= dfData_g, printData=resRecords, startDate= startDate, endDate= endDate, col=column, printCol=colAttribute)
+        # print(dfData_g)
+        return render_template('testGraph.html.j2', data= dfData_g,
+                                printData=resRecords, startDate= startDate,
+                                endDate= endDate, col=column, printCol=colAttribute)
     # in case of get request just return the html template
     return render_template('testGraph.html.j2')
 
@@ -120,7 +123,6 @@ def displayPmuAvailabilityData():
     return render_template('displayPmuAvailabilityData.html.j2')
 
 if __name__ == '__main__':
-    app.run(port=int(appConfig['flaskPort']), debug=True)
     serverMode: str = appConfig['mode']
     if serverMode.lower() == 'd':
         app.run(host="0.0.0.0", port=int(appConfig['flaskPort']), debug=True)
